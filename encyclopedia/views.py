@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 from . import util
 
+import markdown2
+
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -15,7 +17,8 @@ def create(request):
     })
 
 def open(request, title):
-    page = util.get_entry(title)
+    page = markdown2.markdown(util.get_entry(title))
+
     return render(request, "encyclopedia/page.html", {
         "page": page,
         "title": title,
